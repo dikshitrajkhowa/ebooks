@@ -1,0 +1,4 @@
+MATCH (n:Patient) delete n //delete all nodes with label patient
+
+:schema
+

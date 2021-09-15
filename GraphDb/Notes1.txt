@@ -1,0 +1,75 @@
+CREATE (ee:Person { name: "Emil", from: "Sweden", klout: 99 })
+
+CREATE (Node1:Node{name:"AP 2 ",group:2,size:10.5857740586})
+
+
+
+	CREATE clause to create data
+	() parenthesis to indicate a node
+	ee:Person a variable 'ee' and label 'Person' for the new node
+	{} brackets to add properties to the node
+
+
+
+Now find the node representing Emil:
+
+MATCH (ee:Person) WHERE ee.name = "Emil" RETURN ee;
+	MATCH clause to specify a pattern of nodes and relationships
+	(ee:Person) a single node pattern with label 'Person' which will assign matches to the variable 'ee'
+	WHERE clause to constrain the results
+	ee.name = "Emil" compares name property to the value "Emil"
+	RETURN clause used to request particular results
+
+//Show all nodes
+
+START n=node(*) RETURN n;
+
+CREATEclauses can create many nodes and relationships at once.
+
+MATCH (ee:Person) WHERE ee.name = "Emil"
+
+CREATE (js:Person { name: "Johan", from: "Sweden", learn: "surfing" }),
+(ir:Person { name: "Ian", from: "England", title: "author" }),
+(rvb:Person { name: "Rik", from: "Belgium", pet: "Orval" }),
+(ally:Person { name: "Allison", from: "California", hobby: "surfing" }),
+(ee)-[:KNOWS {since: 2001}]->(js),(ee)-[:KNOWS {rating: 5}]->(ir),
+(js)-[:KNOWS]->(ir),(js)-[:KNOWS]->(rvb),
+(ir)-[:KNOWS]->(js),(ir)-[:KNOWS]->(ally),
+(rvb)-[:KNOWS]->(ally)
+
+//Delete all nodes
+START n = node(*) 
+OPTIONAL MATCH n-[r]-() 
+WHERE (ID(n)>0 AND ID(n)<10000) 
+DELETE n, r;
+			   
+MATCH (n)
+OPTIONAL MATCH (n)-[r]-()
+DELETE n,r			   
+			   
+			   
+Pattern matching
+
+For instance, a pattern can be used to find Emil's friends:
+
+MATCH (ee:Person)-[:KNOWS]-(friends)
+WHERE ee.name = "Emil" RETURN ee, friends
+
+MATCHclause to describe the pattern from known Nodes to found Nodes
+(ee)starts the pattern with a Person (qualified by WHERE)
+-[:KNOWS]-matches "KNOWS" relationships (in either direction)
+(friends)will be bound to Emil's friends
+
+
+Recommend
+Using patterns
+Pattern matching can be used to make recommendations. Johan is learning to surf, so he may want to find a new friend who already does:
+
+MATCH (js:Person)-[:KNOWS]-()-[:KNOWS]-(surfer)
+WHERE js.name = "Johan" AND surfer.hobby = "surfing"
+RETURN DISTINCT surfer
+
+
+()empty parenthesis to ignore these nodes
+DISTINCTbecause more than one path will match the pattern
+surferwill contain Allison, a friend of a friend who surfs			   
