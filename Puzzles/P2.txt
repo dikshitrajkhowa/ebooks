@@ -1,0 +1,21 @@
+1) An intrepid globetrotter needs to know this:
+
+	BENIN is in Libya 
+
+	CANADA is in China 
+
+	DENMARK is in the United States 
+
+	FRANCE is in Germany 
+
+	INDIA is in ??
+	
+The first three letters are IATA codes of airports:
+
+BENin = Benina International Airport in Benghazi, Libya
+CANada = Guangzhou Baiyun International Airport in Guangzhou, China
+DENmark = Denver International Airport in Denver, United States
+FRAnce = Frankfurt Airport in Frankfurt, Germany
+INDia = Indianapolis International Airport in Indianapolis, United States
+
+	
