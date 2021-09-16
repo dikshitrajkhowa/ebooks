@@ -1,0 +1,12 @@
+Eclipse - application.properties
+
+This was obscure - and the other answers were very helpful in getting me pointed in the right direction.
+
+After trying the suggested solutions, I poked around deeper and found this in Project Properties --> Java Build Path --> Source(tab) --> Source folders on build path: [Exclusion section]
+
+**/application.properties
+Removing the exclusion fixed the issue and the values were picked up from the application.properties file during startup.
+
+It may be worth noting that running this from the command line (in the directory with the .project file) bypassed the exclusion problem and worked fine.
+
+mvn spring-boot:run
