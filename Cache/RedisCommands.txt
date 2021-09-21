@@ -1,0 +1,6 @@
+set hello world
+get hello
+del hello
+
+
+Lists in Redis

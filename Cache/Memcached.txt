@@ -1,0 +1,58 @@
+1255374567
+
+-	How to query memcached for a doctor object based on npi via telnet 
+	e.g. get 1780605253
+	
+- 	flush_all	Invalidate specific items immediately	
+	flush_all 900 Invalidate all items in n seconds
+	
+- delete (deletes an existing key)
+
+	delete 1780605253
+	
+- Use stats to determine if your memcache server is receiving traffic. The output will include lines such as:
+
+-- Memory
+memcached -m 64
+
+to check memory
+
+stats settings
+
+default memory settings is 64 mb
+
+To check if memory evictions has occured to flush off old items
+
+stats
+and look for evictions
+
+=====================================
+
+Get all keys
+
+First, Telnet to your server:
+
+telnet 127.0.0.1 11211
+Next, list the items to get the slab ids:
+
+stats items
+STAT items:3:number 1
+STAT items:3:age 498
+STAT items:22:number 1
+STAT items:22:age 498
+END
+The first number after ‘items’ is the slab id. Request a cache dump for each slab id, with a limit for the max number of keys to dump:
+
+stats cachedump 3 100
+ITEM views.decorators.cache.cache_header..cc7d9 [6 b; 1256056128 s]
+END
+
+stats cachedump 22 100
+ITEM views.decorators.cache.cache_page..8427e [7736 b; 1256056128 s]
+END
+
+
+========================
+How do I see if memcached is already running on my chosen port?
+
+telnet localhost 11211
