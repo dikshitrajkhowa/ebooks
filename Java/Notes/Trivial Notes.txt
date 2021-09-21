@@ -1,0 +1,10 @@
+1. Set Standard input stream
+
+	System.setIn(new FileInputStream("data/tinyPQ.txt"));
+
+	i.e. the input stream will be the above file
+	
+2. You cant create a generic Array , so we generally create an array of objects and cast it to the generic type
+
+	e.g. private Key[] pq; //Key is a generic type
+		pq = (Key[]) new Object[10];
