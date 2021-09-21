@@ -1,0 +1,28 @@
+To count the number of cows in your field, first count the number of legs and then divide by four.
+
+Let's say we want to arrange (1,1,2,3,4) in a row.
+
+For example,
+
+(1,1,2,4,3),(1,1,3,2,4)
+
+Are possible arrangements.
+
+We first assume that the two 1's are distinct, so we have 5! ways to arrange:
+
+(1a,1b,2,3,4)
+
+But for each of the 5! ways, we have over-counted some cases:
+
+
+(1,1,2,3,4) -> 1{(1a,1b,2,3,4)(1b,1a,2,3,4)
+
+(2,1,1,3,4) -> (2,1a,1b,3,4) (2,1b,1a,3,4)
+
+
+Every 2! of our initial 5! ways corresponds to one actual arrangement.
+ 
+That is why to arrange (1,1,2,3,4)(1,1,2,3,4) in a row, we have:
+
+5!/2! ways
+
