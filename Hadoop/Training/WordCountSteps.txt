@@ -1,0 +1,48 @@
+WordCount example reads text files and counts how often words occur. The input is text files and the output is text files, each line of which contains a word and the count of how often it occured, separated by a tab.
+
+We will use the file "README.txt" under hadoop installation folder for this example
+
+Steps
+
+1. Start your Hadoop cluster if it’s not running already.
+
+	start-all.sh
+
+2. Create a directory HadoopExamples under your home directory and change to it. This will store the compiled code and the jar files
+
+	mkdir HadoopExamples
+
+	cd HadoopExamples
+	
+3. Copy the WordCount.java to HadoopExamples directory	
+	
+4. Compile the code and create a jar file
+
+	mkdir WordCountClasses
+
+	javac -classpath /home/hadoop/hadoop-1.2.1/hadoop-core-1.2.1.jar -d WordCountClasses WordCount.java
+	
+	[Assuming hadoop is installed at the following location - /home/hadoop/hadoop-1.2.1]
+	
+	jar -cvf WordCount.jar -C WordCountClasses/ .
+
+5. Create an Input and Output folder in HDFS which will store the input and output files
+
+	hadoop fs -mkdir /input
+	hadoop fs -mkdir /output
+	
+6. Copy input file to hdfs
+
+	hadoop fs -copyFromLocal /home/hadoop/hadoop-1.2.1/README.txt /input
+	
+7. Execute the program
+
+	hadoop jar /home/hadoop/HadoopExamples/WordCount.jar com.operasolutions.hadooptraining.WordCount /input/README.txt /output/out1
+	
+8. View the output
+	
+	hadoop fs -cat /output/out1/part-r-00000
+	
+	
+	
+	
