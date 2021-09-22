@@ -1,0 +1,50 @@
+
+yourDStream.foreachRDD(rdd => {
+  val count = rdd.count
+  println("Current rate = " + (count / batchInterval) + " records / second")
+})
+
+
+=============
+impala-shell -i vkthd-n6.ny.os.local
+
+sudo service impala-server status
+sudo service impala-state-store status
+sudo service impala-catalog status
+
+
+sudo -u hdfs hadoop fs -chown -R impala:supergroup /realTime
+
+
+SHOW DATABASES and SHOW TABLES
+
+version()
+create database real_time;
+
+select current_database();
+show tables in real_time;
+
+insert into tab1 select * from tab1;
+
+show tables in tpc like 'customer*';
+
+alter table t1 rename to experiments.t1; //move t1 table to experiments database
+
+DROP TABLE IF EXISTS tab1;
+-- The EXTERNAL clause means the data is located outside the central location
+-- for Impala data files and is preserved when the associated Impala table is dropped.
+-- We expect the data to already exist in the directory specified by the LOCATION clause.
+CREATE EXTERNAL TABLE tab1
+(
+   MATCHED_CUSTOMER_ID BIGINT,
+   cmbin_sum_seg_tvl_rev_p1y STRING,
+   DECELERATION_SCORE REAL,
+   cmcnt_seg_tvl_p1y INTEGER,
+   cmpct_seg_tvl_mid_p3y REAL,
+   cmcnt_seg_tvl_upgrd_p1y INTEGER,
+   cmavg_seg_tvl_yld_our_arln_p1y REAL
+)ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LOCATION '/user/dikshit/';
+
+
+
+
