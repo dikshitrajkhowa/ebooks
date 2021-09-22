@@ -1,0 +1,104 @@
+Hope you did Single Node Setup on all machines.. with the same path and environment. If not make it!!
+
+/opt/local/haoop folder
+hduser of hadoop group
+JAVA_HOME etc
+
+What i did was... duplicated the VM and renamed it as Hadoop Slave :-) and then chose "I copied"  option when VM asked for it.
+
+1. Shutdown each single-node cluster with bin/stop-all.sh
+
+2. /etc/hosts (Change ip accordingly.. Use ifconfig)
+	192.168.79.167    master
+	192.168.79.169    slave
+
+	After this "ping master" and "ping slave" should work
+
+3. SSH access
+	The hduser user on the master (aka hduser@master) must be able to connect 
+	a) to its own user account on the master – i.e. ssh master in this context and not necessarily ssh localhost – and 
+	b) to the hduser user account on the slave (aka hduser@slave) via a password-less SSH login.
+
+	hduser@master:~$ ssh-copy-id -i $HOME/.ssh/id_rsa.pub hduser@slave
+
+4. Do these from both master and slave) system
+   ssh master  #Required to store in known_hosts
+   ssh slave   
+
+5. Configuration
+	conf/masters (master only)
+		Despite its name, the conf/masters file defines on which machines Hadoop will start secondary NameNodes in our multi-node cluster. In our case, this is just the master machine. The primary NameNode and the JobTracker will always be the machines on which you run the bin/start-dfs.sh and bin/start-mapred.sh scripts, respectively (the primary NameNode and the JobTracker will be started on the same machine if you run bin/start-all.sh).
+		
+		Note: You can also start an Hadoop daemon manually on a machine via bin/hadoop-daemon.sh start [namenode | secondarynamenode | datanode | jobtracker | tasktracker], which will not take the “conf/masters“ and “conf/slaves“ files into account. 
+		
+		Again, the machine on which bin/start-dfs.sh is run will become the primary NameNode.
+		
+		On master, update conf/masters that it looks like this
+		master
+	
+	conf/slaves (master only)
+		The conf/slaves file lists the hosts, one per line, where the Hadoop slave daemons (DataNodes and TaskTrackers) will be run.
+		
+		On master, update conf/slaves that it looks like this:
+		master
+		slave
+
+	conf/*-site.xml (all machines)
+		conf/core-site.xml
+		<property>
+		  <name>fs.default.name</name>
+		  <value>hdfs://master:54310</value>
+		  <description>The name of the default file system.</description>
+		</property>
+		
+		conf/mapred-site.xml
+		<property>
+		  <name>mapred.job.tracker</name>
+		  <value>master:54311</value>
+		  <description>The host and port that the MapReduce job tracker runs at.</description>
+		</property>
+		
+		conf/hdfs-site.xml
+		<property>
+		  <name>dfs.replication</name>
+		  <value>2</value>
+		  <description>Default block replication.</description>
+		</property>
+		
+6. Additional Settings 
+	conf/mapred-site.xml
+	“mapred.local.dir“
+		Determines where temporary MapReduce data is written. It also may be a list of directories.
+	“mapred.map.tasks“
+		As a rule of thumb, use 10x the number of slaves (i.e., number of TaskTrackers).
+	“mapred.reduce.tasks“
+		As a rule of thumb, use num_tasktrackers * num_reduce_slots_per_tasktracker * 0.99. If num_tasktrackers is small (as in the case of this tutorial), use (num_tasktrackers - 1) * num_reduce_slots_per_tasktracker. 
+
+7. Clean /app/hadoop/tmp/dfs/ (Both master and slave)
+	rm -rf /app/hadoop/tmp/dfs/
+		
+8. Formatting the HDFS filesystem via the NameNode
+    hduser@master:/usr/local/hadoop$ bin/hadoop namenode -format
+	
+8. Starting the multi-node cluster
+	a) HDFS daemons
+		hduser@master:/usr/local/hadoop$ bin/start-dfs.sh
+		master should run - NameNode, SecondaryNameNode and DataNode
+		master should run - DataNode
+		
+		On slave, you can examine the success or failure of this command by inspecting the log file logs/hadoop-hduser-datanode-slave.log.
+	b) MapReduce daemons
+		hduser@master:/usr/local/hadoop$ bin/start-mapred.sh
+		
+		master should have - JobTracker and TaskTracker running
+		slave should have - TaskTracker running
+		
+	OR use
+	hduser@master:/usr/local/hadoop$ bin/start-all.sh
+	
+9. Stopping the multi-node cluster (Reverse order)
+	stop-mapred.sh
+	stop-dfs.sh
+	
+	OR use
+	hduser@master:/usr/local/hadoop$ bin/stop-all.sh

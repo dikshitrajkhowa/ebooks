@@ -1,0 +1,22 @@
+DataNode is Not Starting in singlenode hadoop 2.6.0
+========================================================
+
+I have faced this issue and it is very easy to solve. Your datanode is not starting because after your namenode and datanode started running you formatted the namenode again. That means you have cleared the metadata from namenode. Now the files which you have stored for running the word count are still in the datanode and datanode has no idea where to send the block reports since you formatted the namenode so it will not start.
+
+Here are the things you need to do to fix it. Stop all the Hadoop services (stop-all.sh) and close any active ssh connections.
+
+cat /usr/local/hadoop/etc/hadoop/hdfs-site.xml
+This step is important, see where datanode's data is gettting stored. It is the value associated for datanode.data.dir. For me it is /usr/local/hadoop/hadoop_data/hdfs/datanode. Open your terminal and navigate to above directory and delete the directory named current which will be there under that directory. Make sure you are only deleting the "current" directory.
+
+sudo rm -r /usr/local/hadoop/hadoop_data/hdfs/datanode/current
+Now format the namenode and check whether everything is fine.
+
+hadoop namenode -format
+say yes if it asks you for anything.
+
+jps
+Hope my answer solves the issue. If it doesn't let me know.
+
+Little advice: Don't format your namenode. Without namenode there is no way to reconstruct the data. If your wordcount is not running that is some other problem.
+
+http://stackoverflow.com/questions/29166837/datanode-is-not-starting-in-singlenode-hadoop-2-6-0
