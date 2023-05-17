@@ -1,0 +1,4 @@
+File Size
+
+du -bsh *
+ls -sh

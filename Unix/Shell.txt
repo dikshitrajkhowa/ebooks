@@ -1,0 +1,22 @@
+
+#Just print all files, removing everything after .
+
+for x in *;do echo ${x%*.*};done
+
+#So to remove extension of all files
+
+for x in *;do mv $x $(echo ${x%*.*});done
+
+#Add a prefix , say UNIX to all files
+
+for FILENAME in *;do mv $FILENAME Unix_$FILENAME;done
+
+#Before running such command its always preferable to echo it 
+for FILENAME in *;do echo $FILENAME Unix_$FILENAME;done
+
+#Similarly for prefix , say _delta
+
+for f in *;do mv  $f $f\_delta ;done #since _ is a special character , hence it is written as \_
+
+
+for FILENAME in *;do mv $FILENAME 1604_raw_gate_asmt_raw_view_$FILENAME\_delta;done

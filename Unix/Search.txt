@@ -1,0 +1,40 @@
+Print 1st and 8th col
+
+awk -F '|' '{print $1, $8}' logfile
+
+-- Print 8th 9th 10th 14th column with delimiter ,
+
+ head -10  missingIds.csv |cut -f 8,9,10,14 -d ','
+
+- print 1 random line
+shuf -n 1 missingIds.csv
+
+shuf -n 1 missingIds.csv|cut -f 8,9,10,14 -d ','
+
+
+===============================================
+initial_pnr,initial_pnr_id,flight_leg_id,flt_num
+IHGL93,281213199,70700050,1576
+LEV6SG,177066807,3246606,52
+IHGL93,281213199,18291217,322
+LEV6SG,177066807,99185170,3503
+LEV6SG,177066807,77868061,1802
+IHGL93,281213199,18288903,322
+LEV6SG,177066807,50827546,977
+O4ZLQL,275503645,,
+LEV6SG,177066807,78125599,1818
+LEV6SG,177066807,150309899,6006
+IHGL93,281213199,76565020,1744
+LEV6SG,177066807,9287689,154
+LEV6SG,177066807,98666257,3489
+BBR4FK,268389150,170830101,1234
+
+ 
+ 
+ awk -F',' '$2~/281213199/' test
+ 
+ awk '$2~/1234/' *_rtf_flt_leg_oper_snapshot_20*_delta
+ 
+ cat *rtf_flt_leg_oper_snapshot_20* | grep ^UA\,0014\,HNL\,HNL\,2017\-01\-01\,
+ 
+ 

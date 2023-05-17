@@ -1,0 +1,13 @@
+-rw-r--r--   1 root root       1866 Feb 14 07:47 rahmu.file
+-rw-r--r--   1 rahmu user     95653 Feb 14 07:47 foo.file
+-rw-r--r--   1 rahmu user   1073822 Feb 14 21:01 bar.file
+
+
+Search for lines with "rahmu" in 3rd col but print whole lines
+
+cat test |awk '$3 == "rahmu"'
+
+
+if the data is separated by commas then user
+
+cat test |awk -F',' '$3 == "rahmu"'

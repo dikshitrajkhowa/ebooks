@@ -1,0 +1,5 @@
+sort -t, -r -k4,4  flightCustomerRelLOFId_preAnalyse.csv |head
+
+sort -t $',' -r -k4,4  flightCustomerRelLOFId_preAnalyse.csv |head
+
+sort on 4th col

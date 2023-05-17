@@ -1,0 +1,17 @@
+How do I insert text at beginning of a multi-line selection in vi/Vim?
+
+Use Ctrl+V to enter visual block mode
+Move Up/Downto select the columns of text in the lines you want to comment.
+Then hit Shift+i and type the text you want to insert.
+Then hit Esc, wait 1 second and the inserted text will appear on every line.
+
+to delete press d
+
+
+Searching Text
+
+/string	search forward for occurrence of string in text
+?string	search backward for occurrence of string in text
+n		move to next occurrence of search string
+N		move to next occurrence of search string in opposite direction
+

@@ -1,0 +1,37 @@
+tmux
+
+ tmux new-session -s {session-name} 
+ 
+ tmux attach-session -t {session-name}
+ 
+Ctrl-b c Create new window
+Ctrl-b d Detach current client
+Ctrl-b l Move to previously selected window
+Ctrl-b n Move to the next window
+Ctrl-b p Move to the previous window
+Ctrl-b & Kill the current window
+Ctrl-b , Rename the current window
+Ctrl-b % Split the current window into two panes
+Ctrl-b q Show pane numbers (used to switch between panes)
+Ctrl-b o Switch to the next pane
+Ctrl-b ? List all keybindings
+
+tmux attach-session -t SigHub
+
+tmux list-sessions
+
+tmux attach-session -t RealTime
+
+tmux new-session -s TN
+
+scroll - ctrl+b [
+
+============================
+Tmux failed to connect to server error on `tmux ls` when there are no running sessions
+http://stackoverflow.com/questions/29855506/tmux-failed-to-connect-to-server-error-on-tmux-ls-when-there-are-no-running-se
+
+% ps aux | grep -w [t]mux
+root     14799  0.2  0.0  36020   488 ?        Ss   May08  51:30 tmux
+% kill -USR1 14799
+% tmux ls
+<list of tmux sessions>

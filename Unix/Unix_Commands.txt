@@ -1,0 +1,134 @@
+du -ch 1651_* |grep total
+total size of all files starting with 1651_
+
+1. CPU Info
+	cat /proc/cpuinfo
+	
+2. No of Cores
+
+	grep 'model name' /proc/cpuinfo | wc -l
+
+3. No of processors
+
+cat /proc/cpuinfo | grep processor
+
+4. Delete all files in a folder
+
+rm -rf *
+
+5.Show line numbers in vi
+:set nu
+
+Show Hidden Characters
+
+:set list
+
+Turning them back off is just as easy:
+:set nolist
+
+Go to a particular line
+vi +36 foo.c
+or on opened files :14
+
+To see what line you're on at any time, press Ctrl-Shift-g. To number all lines, press Esc and enter:
+  :set number
+  
+ 6 see port use
+  netstat -ln | grep '6500' | grep 'LISTEN'
+  
+ 7. Process used by port 9000
+ 
+  netstat -tulpn | grep 9000
+  tcp        0      0 ::ffff:127.0.0.1:9000       :::*                        LISTEN      18755/java
+  
+  18755 is the port
+  
+  ps u pid_number
+  (user of a process pid_number)
+  
+  id -u indos/dikshit.rajkhowa
+  
+8. Clean contents of file
+
+>filename
+touch filename
+filename < /dev/null
+  
+  
+9. Tar
+
+tar -zcvf archive-name.tar.gz directory-name
+
+-z: Compress archive using gzip program
+-c: Create archive
+-v: Verbose i.e display progress while creating archive
+-f: Archive File name
+
+$ tar -zcvf prog-1-jan-2005.tar.gz /home/jerry/prog
+
+
+Extract in current dir
+
+$ tar -zxvf prog-1-jan-2005.tar.gz
+
+-x: Extract files
+
+10. Unzip recursively
+
+find . -name "*.zip" | while read filename; do unzip -o -d "`dirname "$filename"`" "$filename"; done; 
+
+find . -name "*.gz" | while read filename; do gunzip "`dirname "$filename"`" "$filename"; done;  
+
+============================
+10. Text search
+
+grep -r "text string to search” directory-path
+
+Replace 
+
+sed -i -e 's/foo/bar/g' filename 
+sed -i -e 's/localhost/172.20.9.17/g' ./environment_test.yaml
+
+s is used to replace the found expression "foo" with "bar" and g used to replace any found matches.
+
+-i option is used to edit in place on filename.
+
+-e option indicates a command to run.
+
+===================
+SCP
+
+scp  INDOS\\dikshit.rajkhowa@172.20.9.17:/home/dikshit.rajkhowa/SignalHubSetups/fraud.sql .
+
+for recursive
+scp -r INDOS\\dikshit.rajkhowa@172.20.9.17:/home/dikshit.rajkhowa/SampleDir .
+
+
+Local to remote
+
+scp Opera_TarmacDriverSched_Hist_20160726.csv INDOS\\dikshit.rajkhowa@172.20.17.80:/home/dikshit.rajkhowa/.
+
+======================
+How to find all files containing specific text on Linux?
+
+grep -rnw '/path/to/somewhere/' -e "pattern"
+-r or -R is recursive,
+-n is line number, and
+-w stands match the whole word.
+-l (lower-case L) can be added to just give the file name of matching files.
+Along with these, --exclude or --include parameter could be used for efficient searching. Something like below:
+grep --include=\*.{c,h} -rnw '/path/to/somewhere/' -e "pattern"
+This will only search through the files which have .c or .h extensions. Similarly a sample use of --exclude:
+
+grep --exclude=*.o -rnw '/path/to/somewhere/' -e "pattern"
+Above will exclude searching all the files ending with .o extension. Just like exclude file it's possible to exclude/include directories through --exclude-dir and --include-dir parameter; for example, the following shows how to integrate --exclude-dir:
+
+grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e "pattern"
+==========================
+ls
+file count
+
+ls -ltr 1500*|wc -l
+
+line number
+ls | grep android | nl
