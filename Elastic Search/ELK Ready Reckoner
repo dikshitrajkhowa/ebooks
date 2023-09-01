@@ -1,0 +1,9 @@
+curl -XGET "http://localhost:9200/_cat/indices?v"
+curl http://localhost:9200/_cat/nodes?h=h,diskAvail
+
+
+curl -X PUT "localhost:9200/essconsumerv1" -H 'Content-Type: application/json' -d'{"settings" : {"number_of_shards" : 20,"number_of_replicas" : 2 }}'
+curl -X DELETE "localhost:9200/essconsumerv1"
+
+http://localhost:9200/
+http://localhost:9200/_nodes

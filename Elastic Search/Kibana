@@ -1,0 +1,29 @@
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+Get /essconsumerv1/_mapping
+http://localhost:9200/essconsumerv1/_mapping
+
+GET /essconsumerv1/_search
+
+GET essconsumerv1/_search
+{
+  "query": {
+    "terms": {
+      "_id": [ "nkwHmnIB5OQnnkeNpZoE", "2" ] 
+    }
+  }
+}
+
+GET /essconsumerv1/_search
+	{
+	  "query": {
+		"term": {
+		  "name": "RALPH W MALCOM"
+		}
+	  }
+	}

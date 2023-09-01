@@ -1,3 +1,0 @@
-Useful gfsh Shell Variables
-
-echo --string=$*
