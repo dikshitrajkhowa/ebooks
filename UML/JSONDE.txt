@@ -1,0 +1,1 @@
+-javaagent:"C:\Program Files\jSonde\lib\jsonde.agent-1.0.0.beta7.jar"=60001
